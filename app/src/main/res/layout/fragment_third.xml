@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/paper">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="24dp">
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:text="@string/guide_intro" android:textSize="18sp" android:lineSpacingExtra="4dp"
+            android:textColor="@color/text_primary" />
+        <TextView style="@style/GuideCard" android:text="@string/guide_posture" />
+        <TextView style="@style/GuideCard" android:text="@string/guide_grip" />
+        <TextView style="@style/GuideCard" android:text="@string/guide_pressure" />
+        <TextView style="@style/GuideCard" android:text="@string/guide_rhythm" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="24dp" android:text="@string/alphabet_model"
+            android:textSize="29sp" android:fontFamily="serif" android:textStyle="italic"
+            android:lineSpacingExtra="8dp" android:textColor="@color/ink_green" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="24dp" android:text="@string/accessibility_note"
+            android:textSize="15sp" android:lineSpacingExtra="3dp" android:textColor="@color/text_secondary" />
+    </LinearLayout>
+</ScrollView>
