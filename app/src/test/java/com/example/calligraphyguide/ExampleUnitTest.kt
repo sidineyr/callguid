@@ -1,4 +1,4 @@
-package com.example.calligraphyguide
+package com.sidineyr.callguide
 
 import org.junit.Test
 
@@ -11,7 +11,9 @@ import org.junit.Assert.*
  */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun exerciseSequence_wrapsToFirstItem() {
+        val exercises = listOf("a", "m", "s", "g", "Brasil")
+        val nextIndex = (exercises.lastIndex + 1) % exercises.size
+        assertEquals("a", exercises[nextIndex])
     }
 }
