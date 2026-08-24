@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".FirstFragment">
-
-    <TextView
-        android:id="@+id/textview_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_first_fragment"
-        app:layout_constraintBottom_toTopOf="@id/button_first"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_first" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fillViewport="true" android:background="@color/paper">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:gravity="center_horizontal"
+        android:paddingStart="24dp" android:paddingEnd="24dp" android:paddingTop="36dp" android:paddingBottom="32dp">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Aa" android:textSize="72sp" android:textStyle="italic"
+            android:textColor="@color/ink_green" android:fontFamily="serif" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" android:text="@string/home_title" android:textAlignment="center"
+            android:textSize="30sp" android:textStyle="bold" android:textColor="@color/ink_green" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" android:text="@string/home_intro" android:textAlignment="center"
+            android:textSize="18sp" android:lineSpacingExtra="4dp" android:textColor="@color/text_primary" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/practice_button"
+            android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="32dp"
+            android:text="@string/start_practice" android:textSize="17sp" />
+        <com.google.android.material.button.MaterialButton android:id="@+id/guide_button"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="12dp"
+            android:text="@string/open_guide" android:textSize="17sp" />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="32dp" android:padding="18dp" android:background="@drawable/tip_background"
+            android:text="@string/daily_tip" android:textSize="16sp" android:lineSpacingExtra="3dp"
+            android:textColor="@color/text_primary" />
+    </LinearLayout>
+</ScrollView>
