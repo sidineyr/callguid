@@ -1,12 +1,25 @@
 <resources>
-    <string name="app_name">calligraphyguide</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="app_name">CallGuide</string>
+    <string name="home_label">Início</string>
+    <string name="practice_label">Praticar</string>
+    <string name="guide_label">Guia de caligrafia</string>
+    <string name="home_title">Escrever também é desenhar</string>
+    <string name="home_intro">Um guia simples para treinar letras bonitas, legíveis e pessoais — no seu ritmo.</string>
+    <string name="start_practice">Começar a praticar</string>
+    <string name="open_guide">Aprender a técnica</string>
+    <string name="daily_tip"><b>Dica do dia</b>\nDevagar também é progresso. Observe a forma, respire e repita sem apertar a mão.</string>
+    <string name="practice_instruction">Observe o modelo e desenhe no espaço pautado.</string>
+    <string name="exercise_progress">Exercício %1$d de %2$d</string>
+    <string name="undo">Desfazer</string>
+    <string name="clear">Limpar</string>
+    <string name="next_exercise">Próximo</string>
+    <string name="model_description">Modelo para copiar</string>
+    <string name="practice_canvas_description">Área pautada para praticar o traçado com o dedo ou uma caneta digital</string>
+    <string name="guide_intro">A caligrafia nasce de movimentos confortáveis e repetidos. Não existe uma letra perfeita: existe uma escrita legível, consciente e sua.</string>
+    <string name="guide_posture"><b>1. Prepare o corpo</b>\nApoie os pés, relaxe os ombros e incline levemente o papel.</string>
+    <string name="guide_grip"><b>2. Segure sem prender</b>\nApoie a caneta entre polegar e indicador, sem apertar. Deixe a mão deslizar.</string>
+    <string name="guide_pressure"><b>3. Cuide da pressão</b>\nUm traço leve cansa menos. Faça uma pausa se houver dor ou tensão.</string>
+    <string name="guide_rhythm"><b>4. Encontre o ritmo</b>\nTreine formas simples antes das palavras: linhas, ondas, círculos e laços.</string>
+    <string name="alphabet_model">Aa Bb Cc Dd Ee Ff Gg\nHh Ii Jj Kk Ll Mm Nn\nOo Pp Qq Rr Ss Tt Uu\nVv Ww Xx Yy Zz</string>
+    <string name="accessibility_note">Acessibilidade: aumente o tamanho do texto nas configurações do Android. Pessoas com dificuldade motora podem praticar em papel maior ou usar uma caneta digital mais grossa.</string>
 </resources>
