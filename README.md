@@ -21,7 +21,23 @@ Requisitos: Android Studio, JDK 11 e Android SDK 33. No Windows, use `gradlew.ba
 
 O APK será criado em `app/build/outputs/apk/debug/`.
 
-O workflow **Android CI** repete esses testes a cada envio ao branch `master` e disponibiliza o APK como artefato quando o build termina com sucesso.
+### Testar no Windows sem publicar em loja
+
+O modo de teste recomendado gera um APK de depuração local. No PowerShell, dentro da pasta do projeto, execute:
+
+```powershell
+.\scripts\test-apk.ps1
+```
+
+Para também instalar o aplicativo em um celular conectado por USB:
+
+```powershell
+.\scripts\test-apk.ps1 -Install
+```
+
+Ative antes as **Opções do desenvolvedor** e a **Depuração USB** no Android. O script usa o Gradle Wrapper e o ADB, detecta as instalações padrão do Android Studio e não exige conta de desenvolvedor, assinatura de produção ou publicação na Play Store.
+
+O workflow **Android CI** permanece disponível para acionamento manual. Ele não roda automaticamente enquanto o runner da conta falha antes de executar qualquer etapa do projeto.
 
 ## Princípios pedagógicos
 
