@@ -1,10 +1,9 @@
 name: Android CI
 
+# The repository runner is currently unavailable before any build step starts.
+# Keep CI opt-in while local debug builds remain the supported test path.
 on:
-  push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+  workflow_dispatch:
 
 permissions:
   contents: read
