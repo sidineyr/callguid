@@ -1,34 +1,52 @@
 # CallGuide
 
-Aplicativo Android gratuito e offline para iniciação à caligrafia. O projeto combina orientação pedagógica, modelos de letras e uma área pautada de prática por toque.
+A free, offline Android application for introductory handwriting practice. The project combines pedagogical guidance, letter models, and a ruled touch-based practice area.
 
-## Recursos
+## Features
 
-- guia de postura, empunhadura, pressão e ritmo;
-- exercícios progressivos com letras e palavras;
-- tela de traçado com **desfazer** e **limpar**;
-- interface em português, responsiva e compatível com leitores de tela;
-- nenhuma conta, anúncio, permissão especial ou coleta de dados.
+- guidance on posture, pencil grip, pressure, and rhythm;
+- progressive exercises with letters and words;
+- a tracing canvas with **Undo** and **Clear** controls;
+- a responsive Portuguese-language interface compatible with screen readers;
+- no accounts, advertisements, special permissions, or data collection.
 
-## Executar
+## Run the project
 
-Requisitos: Android Studio, JDK 11 e Android SDK 33.
+Requirements: Android Studio, JDK 11, and Android SDK 33. On Windows, use `gradlew.bat` instead of `./gradlew`.
 
 ```bash
 ./gradlew test
 ./gradlew assembleDebug
 ```
 
-O APK será criado em `app/build/outputs/apk/debug/`.
+The APK will be generated at `app/build/outputs/apk/debug/`.
 
-## Princípios pedagógicos
+### Test on Windows without publishing to an app store
 
-O CallGuide valoriza legibilidade, conforto e autoria. O aplicativo não atribui notas nem define uma “letra perfeita”; ele oferece modelos e incentiva a prática consciente, respeitando ritmos e condições motoras diferentes.
+The recommended test mode generates a local debug APK. In PowerShell, from the project directory, run:
 
-## Privacidade
+```powershell
+.\scripts\test-apk.ps1
+```
 
-Todo o conteúdo funciona localmente. O aplicativo não solicita acesso à internet e não armazena os traçados realizados.
+To also install the application on an Android device connected through USB, run:
 
-## Licença
+```powershell
+.\scripts\test-apk.ps1 -Install
+```
 
-Distribuído sob a licença MIT. Consulte [LICENSE](LICENSE).
+First enable **Developer options** and **USB debugging** on the Android device. The script uses the Gradle Wrapper and ADB, detects the default Android Studio installation paths, and requires no developer account, production signing key, or Play Store publication.
+
+The **Android CI** workflow remains available for manual runs. It will not run automatically while the account runner continues to fail before executing any project step.
+
+## Pedagogical principles
+
+CallGuide values legibility, comfort, and authorship. The application does not assign grades or define “perfect handwriting.” It provides models and encourages deliberate practice while respecting different learning rhythms and motor abilities.
+
+## Privacy
+
+All content runs locally. The application does not request internet access and does not store completed traces.
+
+## License
+
+Distributed under the MIT License. See [LICENSE](LICENSE).

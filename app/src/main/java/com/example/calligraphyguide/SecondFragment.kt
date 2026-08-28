@@ -21,6 +21,10 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, state: Bundle?) {
         exerciseIndex = state?.getInt(KEY_EXERCISE) ?: 0
         showExercise()
+        binding.traceView.setOnStrokesChangedListener { hasStrokes ->
+            binding.clearButton.isEnabled = hasStrokes
+            binding.undoButton.isEnabled = hasStrokes
+        }
         binding.clearButton.setOnClickListener { binding.traceView.clear() }
         binding.undoButton.setOnClickListener { binding.traceView.undo() }
         binding.nextExerciseButton.setOnClickListener {
