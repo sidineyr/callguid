@@ -14,12 +14,14 @@ class TraceView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     View(context, attrs, defStyleAttr) {
     private val paths = mutableListOf<Path>()
     private var currentPath: Path? = null
+    private var strokesChangedListener: ((Boolean) -> Unit)? = null
+    private val density = resources.displayMetrics.density
     private val ink = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.rgb(37, 72, 61); style = Paint.Style.STROKE; strokeWidth = 9f
+        color = Color.rgb(37, 72, 61); style = Paint.Style.STROKE; strokeWidth = 6f * density
         strokeCap = Paint.Cap.ROUND; strokeJoin = Paint.Join.ROUND
     }
     private val guide = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.rgb(211, 173, 112); style = Paint.Style.STROKE; strokeWidth = 2f
+        color = Color.rgb(211, 173, 112); style = Paint.Style.STROKE; strokeWidth = density
     }
 
     init {
@@ -42,16 +44,45 @@ class TraceView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
                 currentPath = Path().apply { moveTo(event.x, event.y) }
                 invalidate()
             }
-            MotionEvent.ACTION_MOVE -> { currentPath?.lineTo(event.x, event.y); invalidate() }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                currentPath?.let(paths::add); currentPath = null
+            MotionEvent.ACTION_MOVE -> {
+                currentPath?.let { path ->
+                    for (i in 0 until event.historySize) {
+                        path.lineTo(event.getHistoricalX(i), event.getHistoricalY(i))
+                    }
+                    path.lineTo(event.x, event.y)
+                }
+                invalidate()
+            }
+            MotionEvent.ACTION_UP -> {
+                currentPath?.lineTo(event.x, event.y)
+                currentPath?.let(paths::add)
+                currentPath = null
+                strokesChangedListener?.invoke(paths.isNotEmpty())
                 parent.requestDisallowInterceptTouchEvent(false); performClick(); invalidate()
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                currentPath = null
+                parent.requestDisallowInterceptTouchEvent(false)
+                invalidate()
             }
         }
         return true
     }
 
     override fun performClick(): Boolean { super.performClick(); return true }
-    fun clear() { paths.clear(); currentPath = null; invalidate() }
-    fun undo() { if (paths.isNotEmpty()) paths.removeAt(paths.lastIndex); invalidate() }
+    fun setOnStrokesChangedListener(listener: (Boolean) -> Unit) {
+        strokesChangedListener = listener
+        listener(paths.isNotEmpty())
+    }
+
+    fun clear() {
+        paths.clear(); currentPath = null; invalidate()
+        strokesChangedListener?.invoke(false)
+    }
+
+    fun undo() {
+        if (paths.isNotEmpty()) paths.removeAt(paths.lastIndex)
+        invalidate()
+        strokesChangedListener?.invoke(paths.isNotEmpty())
+    }
 }

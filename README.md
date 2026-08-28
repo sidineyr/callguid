@@ -12,7 +12,7 @@ Aplicativo Android gratuito e offline para iniciação à caligrafia. O projeto 
 
 ## Executar
 
-Requisitos: Android Studio, JDK 11 e Android SDK 33.
+Requisitos: Android Studio, JDK 11 e Android SDK 33. No Windows, use `gradlew.bat` no lugar de `./gradlew`.
 
 ```bash
 ./gradlew test
@@ -20,6 +20,8 @@ Requisitos: Android Studio, JDK 11 e Android SDK 33.
 ```
 
 O APK será criado em `app/build/outputs/apk/debug/`.
+
+O workflow **Android CI** repete esses testes a cada envio ao branch `master` e disponibiliza o APK como artefato quando o build termina com sucesso.
 
 ## Princípios pedagógicos
 
