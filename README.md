@@ -47,6 +47,14 @@ CallGuide values legibility, comfort, and authorship. The application does not a
 
 All content runs locally. The application does not request internet access and does not store completed traces.
 
+## Fonte inspirada em gabarito manuscrito
+
+O projeto também publica a **Sidiney Caligrafia Refinada**, uma fonte TTF inspirada em um gabarito manuscrito de Sidiney Rodrigues. O redesenho usa curvas contínuas, terminais arredondados e contraste entre subidas finas e descidas fortes.
+
+[Conheça o processo, veja o gabarito e baixe os arquivos](fonts/sidiney-caligrafia/README.md).
+
+![Prévia da fonte Sidiney Caligrafia Refinada](fonts/sidiney-caligrafia/previas/Previa-Caligrafia-Refinada.png)
+
 ## License
 
 Distributed under the MIT License. See [LICENSE](LICENSE).
