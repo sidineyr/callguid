@@ -6,7 +6,7 @@ O gabarito orientou a inclinação, as proporções e os floreios. A versão fin
 
 ## Baixar e instalar
 
-- [Fonte TTF — versão 2.0](SidineyCaligrafia-Refinada.ttf?raw=true)
+- [Fonte TTF — versão 2.001](SidineyCaligrafia-Refinada.ttf?raw=true)
 - [Pacote com fonte, gabarito, prévias, documentação e código](Caligrafia-Refinada.zip?raw=true)
 - [Gabarito original](gabarito-original.jpg)
 - [Folha de amostras](previas/Previa-Caligrafia-Refinada.png)
@@ -44,6 +44,10 @@ python src/validate_font.py gerado/SidineyCaligrafia-Refinada.ttf
 Os novos arquivos são gravados em `gerado/`. Para outro destino, use `--output-dir CAMINHO`. A opção `--label-font CAMINHO.ttf` permite escolher a fonte das legendas da prévia; ela não altera as letras da fonte caligráfica.
 
 A publicação inclui a versão aprovada do TTF e suas prévias. A validação verifica abertura do arquivo, leitura dos contornos, métricas, cobertura básica em português e renderização de frases. Isso não equivale a testar todos os editores ou todas as combinações possíveis de caracteres.
+
+## Ajuste da versão 2.001
+
+O F maiúsculo recebeu a pressão de descida na haste principal, mantendo seu percurso, floreios e largura de avanço. Os demais caracteres conservam os contornos publicados.
 
 ## Autoria e licença
 

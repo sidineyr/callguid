@@ -153,7 +153,7 @@ for name,g in glyphs.items():
  g.recalcBounds(glyphs);metrics[name]=(metrics[name][0],getattr(g,'xMin',0))
 fb.setupGlyf(glyphs);fb.setupHorizontalMetrics(metrics)
 fb.setupHorizontalHeader(ascent=1200,descent=-450,lineGap=100)
-fb.setupNameTable({'familyName':'Sidiney Caligrafia Refinada','styleName':'Regular','uniqueFontIdentifier':'SidineyCaligrafia-2.000','fullName':'Sidiney Caligrafia Refinada','psName':'SidineyCaligrafia-Refinada','version':'Version 2.000','copyright':'Caligrafia pessoal fornecida pelo usuario. Digitalizacao e sinais complementares, 2026.','description':'Fonte pessoal derivada de amostra manuscrita. Letras e algarismos redesenhados por percursos de pena a partir do gabarito; acentos e simbolos reconstruidos.'})
+fb.setupNameTable({'familyName':'Sidiney Caligrafia Refinada','styleName':'Regular','uniqueFontIdentifier':'SidineyCaligrafia-2.001','fullName':'Sidiney Caligrafia Refinada','psName':'SidineyCaligrafia-Refinada','version':'Version 2.001','copyright':'Caligrafia pessoal fornecida pelo usuario. Digitalizacao e sinais complementares, 2026.','description':'Fonte pessoal derivada de amostra manuscrita. Letras e algarismos redesenhados por percursos de pena a partir do gabarito; acentos e simbolos reconstruidos.'})
 fb.setupOS2(sTypoAscender=1200,sTypoDescender=-450,sTypoLineGap=100,usWinAscent=1500,usWinDescent=550,sxHeight=380,sCapHeight=700,fsSelection=64)
 fb.setupPost(italicAngle=-35);fb.setupMaxp()
 fb.save(ROOT+'/SidineyCaligrafia-Refinada.ttf')
