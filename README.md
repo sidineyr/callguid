@@ -1,4 +1,8 @@
-# CallGuide
+# CallGuide — caligrafia offline para Android
+
+**Aplicativo gratuito de caligrafia para Android**, com exercícios de letras e palavras, modelos de escrita e área pautada para prática com o toque. Funciona offline, sem cadastro ou anúncios, e tem código aberto sob licença MIT.
+
+[Conheça o CallGuide e seus recursos](https://sidineyr.github.io/callguide/) · [Portfólio de Sidiney Rodrigues](https://sidineyr.github.io/)
 
 A free, offline Android application for introductory handwriting practice. The project combines pedagogical guidance, letter models, and a ruled touch-based practice area.
 
