@@ -4,6 +4,16 @@ const path = require('node:path');
 const fs = require('node:fs');
 const smoke = process.argv.includes('--smoke-test');
 let window;
+function smokeFailure(error) {
+  console.error(error);
+  if(smoke && process.env.CALLGUIDE_SMOKE_DIR) {
+    fs.mkdirSync(process.env.CALLGUIDE_SMOKE_DIR,{recursive:true});
+    fs.writeFileSync(path.join(process.env.CALLGUIDE_SMOKE_DIR,'smoke.json'),JSON.stringify({
+      passed:false,platform:process.platform,arch:process.arch,error:error?.stack||String(error)
+    },null,2));
+  }
+  app.exit(1);
+}
 app.setName('CallGuide');
 if(smoke && process.env.CALLGUIDE_SMOKE_DIR) {
   const profile=path.join(process.env.CALLGUIDE_SMOKE_DIR,'profile');fs.mkdirSync(profile,{recursive:true});
@@ -29,7 +39,7 @@ app.whenReady().then(async () => {
   window.webContents.setWindowOpenHandler(() => ({action:'deny'}));
   window.webContents.on('will-navigate',(event,url) => { if(!url.startsWith('file:')) event.preventDefault(); });
   window.webContents.on('render-process-gone',(_event,details) => {
-    if(smoke) { console.error(details); app.exit(1); }
+    if(smoke) smokeFailure(new Error('Renderer terminated: '+JSON.stringify(details)));
   });
   const failures=[];
   window.webContents.on('console-message',event => {
@@ -37,7 +47,7 @@ app.whenReady().then(async () => {
   });
   await window.loadFile(path.join(__dirname,'index.html'));
   if(smoke) {
-    const watchdog=setTimeout(()=>{console.error('Smoke test timed out');app.exit(1);},45000);
+    const watchdog=setTimeout(()=>smokeFailure(new Error('Smoke test timed out')),45000);
     try {
       const result=await window.webContents.executeJavaScript('window.callGuideSelfTest()');
       const dir=process.env.CALLGUIDE_SMOKE_DIR;
@@ -48,7 +58,7 @@ app.whenReady().then(async () => {
       fs.writeFileSync(path.join(dir,'smoke.json'),JSON.stringify({platform:process.platform,arch:process.arch,...result,consoleErrors:failures},null,2));
       clearTimeout(watchdog);
       if(!result.passed || failures.length) app.exit(1); else app.quit();
-    } catch(error) { console.error(error); app.exit(1); }
+    } catch(error) { smokeFailure(error); }
   }
-}).catch(error=>{console.error(error);app.exit(1);});
+}).catch(smokeFailure);
 app.on('window-all-closed',()=>app.quit());
