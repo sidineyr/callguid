@@ -8,6 +8,21 @@ Aprenda o movimento das letras cursivas e pratique no papel digital. Aplicativo 
 
 O site inclui apresentação responsiva, instruções, privacidade, mapa do site, sitemap XML, metadados sociais e dados estruturados. A publicação ocorre pelo workflow `Site CallGuide e capturas Android`.
 
+## Windows, Linux e macOS
+
+O **CallGuide Desktop 2.2.0** permite escrever com **mouse ou caneta de mesa digitalizadora**, com pressão variável quando o dispositivo e seu driver fornecem esse dado. Inclui palavras animadas, modelo para traçar, borracha, desfazer, cores, ampliação e exportação do desenho em PNG. Funciona offline, sem anúncios.
+
+**[⬇ Baixar versões desktop](https://github.com/sidineyr/callguid/releases/tag/desktop-v2.2.0)** · **[Diretório desktop e instruções](desktop/README.md)**
+
+| Sistema | Arquivo |
+|---|---|
+| Windows x64 | [ZIP portátil](https://github.com/sidineyr/callguid/releases/download/desktop-v2.2.0/CallGuide-Desktop-2.2.0-windows-x64.zip) |
+| Linux x64 | [TAR.GZ](https://github.com/sidineyr/callguid/releases/download/desktop-v2.2.0/CallGuide-Desktop-2.2.0-linux-x64.tar.gz) |
+| macOS Intel | [ZIP](https://github.com/sidineyr/callguid/releases/download/desktop-v2.2.0/CallGuide-Desktop-2.2.0-macos-x64.zip) |
+| macOS Apple Silicon | [ZIP](https://github.com/sidineyr/callguid/releases/download/desktop-v2.2.0/CallGuide-Desktop-2.2.0-macos-arm64.zip) |
+
+Extraia o pacote inteiro. As versões desktop não possuem certificado comercial; o macOS usa assinatura ad-hoc, sem notarização Apple. O uso de uma mesa física e sua pressão dependem do driver e precisam ser conferidos no equipamento. [Veja os detalhes de instalação e validação](desktop/README.md).
+
 ## Fonte Sidiney Caligrafia Refinada
 
 ### [⬇ Baixar SidineyCaligrafia-Refinada.ttf](https://github.com/sidineyr/callguid/raw/80bf6f2d79ac7f85c2d7e68b4855ecf85211bd16/fonts/sidiney-caligrafia/SidineyCaligrafia-Refinada.ttf)
@@ -66,4 +81,4 @@ Versão **2.1.0**, pacote `com.sidineyr.callguide`. O APK é uma compilação de
 
 Compilação, assinatura, manifesto, composição de palavras e testes automatizados de fluxo verificados. O teste manual desta versão em aparelho Android ainda está pendente; relate problemas pelo contato acima.
 
-O repositório apresenta apenas um APK para download, estas instruções, a verificação de integridade e a licença. O [código da versão 2.1](https://github.com/sidineyr/callguid/tree/source/2.1.0) está em uma branch própria. O histórico anterior continua preservado, sem ocupar a lista principal de arquivos. Distribuição sob [licença MIT](LICENSE).
+O repositório reúne o APK Android, o site do projeto, o diretório desktop, instruções, verificações de integridade e licença. O [código da versão 2.1](https://github.com/sidineyr/callguid/tree/source/2.1.0) está em uma branch própria. O histórico anterior continua preservado, sem ocupar a lista principal de arquivos. Distribuição sob [licença MIT](LICENSE).

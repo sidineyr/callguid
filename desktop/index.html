@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>CallGuide — Ateliê de letras</title><link rel="icon" href="assets/icon.png"><link rel="stylesheet" href="style.css">
+  <script src="assets/letters.js" defer></script><script src="geometry.js" defer></script><script src="ink.js" defer></script><script src="app.js" defer></script>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand"><img src="assets/icon.png" width="38" height="38" alt=""><span>CallGuide<small>ATELIÊ DE LETRAS</small></span></div>
+  <div class="intro"><img src="assets/prince.png" alt="Pequeno príncipe indígena imaginário, ilustração original criada com IA"><p>Cada letra,<br><em>um gesto bonito.</em></p></div>
+  <label for="word">O que vamos escrever?</label><textarea id="word" rows="2" maxlength="64" spellcheck="false">Olá</textarea>
+  <div class="input-meta"><span>Palavra ou frase curta</span><span id="count">3 / 32</span></div>
+  <p id="error" role="alert" hidden></p><button class="primary wide" id="prepare">Preparar palavra <span>↗</span></button>
+  <button class="quiet wide" id="saveWord">＋ Salvar palavra</button>
+  <details><summary>Suas palavras favoritas <span id="savedCount">0</span></summary><div id="favorites" class="favorites"></div><p class="hint">Até 12 palavras, somente neste computador.</p></details>
+  <details open><summary>Explore o alfabeto</summary><div class="case"><button id="lower" aria-pressed="true">a → z</button><button id="upper" aria-pressed="false">A → Z</button></div><div id="alphabet" class="alphabet" aria-label="Letras do alfabeto"></div></details>
+  <button class="quiet wide" id="about">Sobre e privacidade</button>
+  <p class="sidebar-foot">GRATUITO · OFFLINE · SEM ANÚNCIOS<br>Desktop 2.2.0</p>
+</aside>
+<main>
+  <header><div><p class="eyebrow">UM TEMPO PARA APRENDER</p><h1>O movimento vira escrita.</h1></div><span class="offline"><i></i> Tudo no seu computador</span></header>
+  <div class="workspace-head"><div><span class="eyebrow">SEU MODELO</span><h2 id="modelTitle">Olá</h2></div><nav class="tabs" aria-label="Modo de aprendizado"><button id="observeTab" class="active" aria-pressed="true">01 · Observar</button><button id="practiceTab" aria-pressed="false">02 · Praticar</button></nav></div>
+  <section id="observePanel" aria-label="Animação da escrita">
+    <div class="paper observe-paper"><span class="paper-label">OBSERVE O CAMINHO DA CANETA</span><svg id="animation" role="img" aria-label="Palavra escrita em cursiva"></svg><span class="paper-foot">Sidiney Caligrafia Refinada</span></div>
+    <div class="playback"><button id="play" class="primary">▶ Escrever palavra</button><button id="replay">↻ Repetir</button><label>Velocidade<select id="speed"><option value="0.5">Lenta · 0,5×</option><option value="1" selected>Normal · 1×</option><option value="1.5">Rápida · 1,5×</option></select></label><label class="check"><input type="checkbox" id="numbers"> Ordem dos traços</label></div>
+    <p id="animationStatus" class="status" aria-live="polite">Observe a palavra e depois experimente o seu traço.</p>
+    <div class="lesson-note"><span>01</span><p><strong>Olhe para o gesto, não só para a forma.</strong><br>As descidas ganham espessura; as subidas ficam leves. A animação simula a pressão para tornar o movimento visível.</p><button id="startPractice">Agora, praticar →</button></div>
+  </section>
+  <section id="practicePanel" hidden aria-label="Papel digital">
+    <div class="ink-toolbar"><label>Entrada<select id="device"><option value="auto">Automática</option><option value="pen">Mesa / caneta</option><option value="mouse">Mouse</option></select></label><button id="eraser" aria-pressed="false">Borracha</button><button id="undo" disabled>Desfazer</button><button id="clear" disabled>Limpar</button><button id="export">Salvar PNG</button></div>
+    <div class="paper practice-paper"><canvas id="ink" aria-label="Papel digital para desenhar a palavra com mouse ou caneta"></canvas><span class="paper-foot">Seu traço, no seu ritmo.</span></div>
+    <div class="drawing-controls"><label>Cor<input type="color" id="color" value="#1b493d"></label><label>Espessura<input type="range" id="size" min="1" max="18" value="4"></label><label class="check"><input type="checkbox" id="pressure" checked> Pressão da caneta</label><label class="check"><input type="checkbox" id="showModel" checked> Mostrar modelo</label></div>
+    <div class="zoom-controls"><label>Ampliação <input type="range" id="zoom" min="100" max="300" value="100"></label><label>Mover papel <input type="range" id="pan" min="-100" max="100" value="0"></label><button id="resetView">Ajustar à tela</button></div>
+    <p id="deviceStatus" class="status" aria-live="polite">Use o mouse ou toque com a caneta da mesa digitalizadora.</p>
+    <p class="hint">A pressão depende da mesa e de seu driver. Com mouse, a espessura é constante. Use uma caneta com driver instalado; não é preciso parear a mesa dentro do aplicativo. Não há correção automática nem nota.</p>
+  </section>
+  <footer><span>Letra inspirada na escrita com caneta esferográfica BIC.</span><span>Respire. Observe. Experimente.</span></footer>
+</main>
+<dialog id="aboutDialog"><button id="closeAbout" class="dialog-close" aria-label="Fechar">×</button><p class="eyebrow">CALLGUIDE DESKTOP 2.2.0</p><h2>Uma letra com história.</h2><p>Aplicativo de Sidiney Rodrigues, inspirado na fonte Sidiney Caligrafia Refinada e em sua escrita com caneta esferográfica BIC. A ilustração de abertura foi criada com IA.</p><h3>Privacidade</h3><p>Tudo funciona offline. Não há conta, publicidade, análise de uso ou envio de palavras e desenhos. As palavras que você decidir salvar ficam no armazenamento local deste aplicativo. Exclua-as na lista de favoritas. Os desenhos ficam apenas na sessão, exceto se você exportar um PNG.</p><p>Suporte: sidiney@edu.univali.br<br>Licença MIT · Windows, Linux e macOS.</p><button id="closeAboutBottom" class="primary">Voltar ao ateliê</button></dialog>
+</body></html>
