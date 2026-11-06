@@ -6,7 +6,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $gradle = Join-Path $projectRoot 'gradlew.bat'
-$apk = Join-Path $projectRoot 'app\build\outputs\apk\debug\app-debug.apk'
+$apk = Join-Path $projectRoot 'app\build\outputs\apk\free\debug\app-free-debug.apk'
 
 if (-not $env:JAVA_HOME) {
     $studioJava = Join-Path $env:ProgramFiles 'Android\Android Studio\jbr'
@@ -27,12 +27,12 @@ if (-not $env:JAVA_HOME -or -not (Test-Path $env:JAVA_HOME)) {
 }
 
 if (-not $env:ANDROID_HOME -or -not (Test-Path $env:ANDROID_HOME)) {
-    throw 'The Android SDK was not found. Open Android Studio, install SDK 33, and try again.'
+    throw 'The Android SDK was not found. Open Android Studio, install SDK 36, and try again.'
 }
 
 Push-Location $projectRoot
 try {
-    & $gradle testDebugUnitTest assembleDebug --no-daemon --stacktrace
+    & $gradle testFreeDebugUnitTest assembleFreeDebug --no-daemon --stacktrace
     if ($LASTEXITCODE -ne 0) {
         throw "Gradle exited with code $LASTEXITCODE."
     }

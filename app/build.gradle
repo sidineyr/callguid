@@ -5,40 +5,80 @@ plugins {
 
 android {
     namespace 'com.sidineyr.callguide'
-    compileSdk 33
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.sidineyr.callguide"
         minSdk 24
-        targetSdk 33
-        versionCode 1
-        versionName "1.0.0"
+        targetSdk 36
+        versionCode 2
+        versionName "2.0.0"
+        buildConfigField 'boolean', 'ADS_ENABLED', 'false'
+        buildConfigField 'String', 'PRIVACY_POLICY_URL', '"https://sidineyr.github.io/callguide/privacy/"'
+        buildConfigField 'String', 'ADMOB_BANNER_ID', '"ca-app-pub-4924241177850142/2754584368"'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
+            buildConfigField 'boolean', 'ADS_PREVIEW', 'false'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    // Optional local test key; never a production upload key.
+    signingConfigs {
+        debug {
+            if (project.hasProperty('debugSigningStore')) {
+                storeFile file(project.property('debugSigningStore'))
+            }
+        }
+    }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
     buildFeatures {
         viewBinding true
+        buildConfig true
+    }
+    flavorDimensions 'distribution'
+    productFlavors {
+        free {
+            dimension 'distribution'
+            buildConfigField 'boolean', 'ADS_PREVIEW', 'false'
+        }
+        sponsored {
+            dimension 'distribution'
+            buildConfigField 'boolean', 'ADS_PREVIEW', 'true'
+            buildConfigField 'boolean', 'ADS_ENABLED', 'true'
+            if (!providers.gradleProperty('productionAds').map { it.toBoolean() }.getOrElse(false)) {
+                applicationIdSuffix '.adstest'
+                versionNameSuffix '-ads-test'
+            }
+        }
+    }
+}
+
+// Production advertising requires a deliberate, documented release invocation.
+androidComponents {
+    beforeVariants(selector().withBuildType('release')) { variant ->
+        if (variant.productFlavors.any { it.second == 'sponsored' } &&
+            !providers.gradleProperty('productionAds').map { it.toBoolean() }.getOrElse(false)) variant.enable = false
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.core:core-ktx:1.16.0'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'androidx.activity:activity-ktx:1.10.1'
+    sponsoredImplementation 'com.google.android.gms:play-services-ads:24.9.0'
+    sponsoredImplementation 'com.google.android.ump:user-messaging-platform:3.2.0'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.4.1'
