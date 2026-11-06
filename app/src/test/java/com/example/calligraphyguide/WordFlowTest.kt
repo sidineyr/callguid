@@ -44,7 +44,10 @@ class WordFlowTest {
         controller.pause().stop().destroy()
     }
 
-    private fun idle() { shadowOf(Looper.getMainLooper()).idle() }
+    private fun idle() {
+        // A paused choreographer needs bounded frames to attach each newly set content view.
+        shadowOf(Looper.getMainLooper()).idleFor(java.time.Duration.ofMillis(32))
+    }
 
     private fun views(view: View = activity.window.decorView): List<View> =
         listOf(view) + if (view is ViewGroup) (0 until view.childCount).flatMap { views(view.getChildAt(it)) } else emptyList()
@@ -141,8 +144,11 @@ class WordFlowTest {
         click("Salvar palavra neste aparelho")
         val saved = JSONArray(activity.getSharedPreferences("words", 0).getString("favorites", "[]"))
         assertEquals("João", saved.getString(0))
-        controller.recreate().visible()
-        idle()
+        // ActivityController.recreate attaches and focuses the new window synchronously;
+        // let its internal traversal run while no lesson animation is active.
+        org.robolectric.shadows.ShadowChoreographer.setPaused(false)
+        try { controller.recreate().visible(); idle() }
+        finally { org.robolectric.shadows.ShadowChoreographer.setPaused(true) }
         assertTrue(views().filterIsInstance<Button>().any { it.text.toString() == "João" })
         assertEquals("João", input().text.toString())
     }
