@@ -1,3 +1,23 @@
+# CallGuide 2.1 — código-fonte
+
+## A letra e sua inspiração
+
+O CallGuide é inspirado na letra da fonte **Sidiney Caligrafia Refinada** e no seu uso com caneta esferográfica **BIC**. A fonte foi publicada pelo autor no [Substack](https://substack.com/home/post/p-223397084). A variação de espessura exibida pelo aplicativo é uma simulação visual para acompanhar o gesto da escrita; não mede a pressão física da caneta ou do dedo.
+
+### [⬇ Baixar a fonte Sidiney Caligrafia Refinada (.ttf)](https://github.com/sidineyr/callguid/raw/80bf6f2d79ac7f85c2d7e68b4855ecf85211bd16/fonts/sidiney-caligrafia/SidineyCaligrafia-Refinada.ttf)
+
+O arquivo está preservado no histórico do próprio repositório. Depois de baixar, você pode instalar a fonte no computador pelos recursos do seu sistema operacional.
+
+Esta branch preserva o código da versão 2.1. O [APK para instalação direta](https://github.com/sidineyr/callguid) continua na página principal do projeto.
+
+Novidades: palavra/frase de até 32 caracteres, animação da palavra inteira, prática sobre o mesmo modelo, diacríticos portugueses e ç, números, velocidades, traços numerados, caneta/borracha, cores/espessura, ampliação do papel e até 12 palavras favoritas locais. Não há avaliação automática da escrita. A variante distribuída no GitHub é free, offline e sem anúncios.
+
+Para compilar: JDK 17 e Android SDK 36; execute `./gradlew testFreeDebugUnitTest assembleFreeRelease`. A saída de release precisa ser alinhada e assinada com a chave privada do responsável, que não está neste repositório. Os testes de fluxo usam Robolectric SDK 35 e não substituem teste físico. Em ambiente restrito, `-PtestUserHome=/caminho/local` define uma pasta gravável para o cache dos testes. O backup automático está desativado; favoritos são excluídos pela interface ou ao limpar os dados do app.
+
+A documentação abaixo registra também a preparação histórica das variantes de distribuição.
+
+---
+
 # CallGuide — caligrafia cursiva animada para Android
 
 Aplicativo gratuito para crianças e adultos observarem o desenho de letras cursivas. A abertura traz um pequeno príncipe indígena imaginário, criado com IA; o teclado oferece 26 letras em cada caixa. Ao escolher uma letra, uma caneta revela seus traços em cerca de 4,2 segundos e retorna ao alfabeto. Há pausa, repetição, retorno automático opcional e papel digital para experimentar.

@@ -7,7 +7,7 @@ from pathlib import Path
 
 root = Path(__file__).resolve().parents[1]
 letters = json.loads((root / 'app/src/main/assets/letters.json').read_text(encoding='utf-8'))
-assert set(letters) == set('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+assert set('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZáàâãéêíóôõúüçÁÀÂÃÉÊÍÓÔÕÚÜÇ0123456789').issubset(letters)
 count = 0
 up, down = [], []
 for char, letter in letters.items():
@@ -39,7 +39,7 @@ for char, letter in letters.items():
             cursor += n + 1
         assert cursor == len(tokens)
         count += 1
-print(f'PASS: all 52 letters, {count} ordered strokes, supported commands and finite coordinates')
+print(f'PASS: all {len(letters)} glyphs, {count} ordered strokes, supported commands and finite coordinates')
 ratio = statistics.median(down)/statistics.median(up)
 assert ratio > 2.5, ratio
 print(f'PASS: median strong-downstroke/hairline-upstroke pressure ratio {ratio:.2f}:1')

@@ -70,6 +70,36 @@ for node in tree.body:
                 'penStrokes': [pen_geometry(p[0], p[1]) if isinstance(p,tuple) else pen_geometry(p) for p in paths]
             }
 assert set(letters) == set('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+
+# Portuguese diacritics use real animated pen paths, not a fallback system font.
+import unicodedata
+for decorated in 'áàâãäéèêëíìîïóòôõöúùûüçÁÀÂÃÄÉÈÊËÍÌÎÏÓÒÔÕÖÚÙÛÜÇ':
+    base, mark = unicodedata.normalize('NFD', decorated)
+    source = letters[base]
+    strokes = list(source['strokes'])
+    if base == 'i': strokes = strokes[:-1]  # accented i has no separate dot
+    y = -465 if base.islower() else -820
+    if mark == '\u0301': accents = [f'M 110 {y} L 180 {y-100}']
+    elif mark == '\u0300': accents = [f'M 190 {y} L 110 {y-100}']
+    elif mark == '\u0302': accents = [f'M 75 {y} L 140 {y-90} L 205 {y}']
+    elif mark == '\u0303': accents = [f'M 55 {y} C 105 {y-90} 155 {y+55} 220 {y-35}']
+    elif mark == '\u0308': accents = [f'M 95 {y} L 96 {y-10}', f'M 195 {y} L 196 {y-10}']
+    elif mark == '\u0327': accents = ['M 120 20 C 60 80 180 90 120 150 C 90 180 45 155 35 145']
+    else: raise ValueError(mark)
+    paths = strokes + accents
+    letters[decorated] = {'advance': source['advance'], 'strokes': paths,
+        'penStrokes': [pen_geometry(p) for p in strokes] + [pen_geometry(p, 18) for p in accents]}
+
+# Numerals are useful for names, short phrases and classroom exercises.
+for node in tree.body:
+    if isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id == 'NUMBERS' for t in node.targets):
+        for char, (advance, paths) in ast.literal_eval(node.value).items():
+            letters[char] = {'advance': advance,
+                'strokes': [p[0] if isinstance(p,tuple) else p for p in paths],
+                'penStrokes': [pen_geometry(p[0],p[1]) if isinstance(p,tuple) else pen_geometry(p) for p in paths]}
+for char, path in {'.': 'M 70 -10 L 72 -20', ',':'M 90 -20 C 100 30 75 80 35 100',
+                   '-':'M 20 -200 L 190 -200', "'":'M 130 -500 L 90 -390'}.items():
+    letters[char] = {'advance': 230, 'strokes':[path], 'penStrokes':[pen_geometry(path,18)]}
 target = root / 'app/src/main/assets/letters.json'
 target.parent.mkdir(parents=True, exist_ok=True)
 target.write_text(json.dumps(letters, ensure_ascii=False, separators=(',',':')) + '\n', encoding='utf-8')
