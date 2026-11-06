@@ -1,0 +1,137 @@
+name: CallGuide Desktop
+
+on:
+  push:
+    branches: [master]
+    paths: ['desktop/**', '.github/workflows/desktop.yml']
+  pull_request:
+    paths: ['desktop/**', '.github/workflows/desktop.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: callguide-desktop-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    name: Package ${{ matrix.name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: windows-x64
+            os: windows-latest
+            platform: win32
+            arch: x64
+            native: true
+          - name: linux-x64
+            os: ubuntu-24.04
+            platform: linux
+            arch: x64
+            native: true
+          - name: macos-x64
+            os: macos-15-intel
+            platform: darwin
+            arch: x64
+            native: true
+          - name: macos-arm64
+            os: macos-15
+            platform: darwin
+            arch: arm64
+            native: true
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Test actual handwriting geometry
+        run: node --test desktop/geometry.test.js desktop/ink.test.js
+      - name: Package verified runtime
+        run: python desktop/package-desktop.py --platform ${{ matrix.platform }} --arch ${{ matrix.arch }} --output desktop/dist
+      - name: Set up sandbox helper for the Linux test runner
+        if: matrix.platform == 'linux'
+        shell: bash
+        run: |
+          sudo chown root:root desktop/dist/.build/CallGuide-linux-x64/chrome-sandbox
+          sudo chmod 4755 desktop/dist/.build/CallGuide-linux-x64/chrome-sandbox
+      - name: Smoke test native desktop runtime
+        if: matrix.native
+        shell: bash
+        env:
+          CALLGUIDE_SMOKE_DIR: ${{ runner.temp }}/callguide-smoke
+          CALLGUIDE_TEST_PLATFORM: ${{ matrix.platform }}
+          CALLGUIDE_TEST_ARCH: ${{ matrix.arch }}
+        run: |
+          python - <<'PY'
+          import json, os, pathlib, subprocess
+          platform=os.environ['CALLGUIDE_TEST_PLATFORM']
+          arch=os.environ['CALLGUIDE_TEST_ARCH']
+          kind={'win32':'windows','linux':'linux','darwin':'macos'}[platform]
+          folder=pathlib.Path('desktop/dist/.build')/f'CallGuide-{kind}-{arch}'
+          binary=folder/({'win32':'CallGuide.exe','linux':'callguide','darwin':'CallGuide.app/Contents/MacOS/Electron'}[platform])
+          command=[str(binary.resolve()),'--smoke-test']
+          if platform=='linux': command=['xvfb-run','-a']+command
+          subprocess.run(command,check=True,timeout=90)
+          report=pathlib.Path(os.environ['CALLGUIDE_SMOKE_DIR'])/'smoke.json'
+          data=json.loads(report.read_text(encoding='utf-8'))
+          assert data.get('passed') is True, data
+          print(json.dumps(data,ensure_ascii=False))
+          PY
+      - name: Upload smoke-test evidence
+        if: always() && matrix.native
+        uses: actions/upload-artifact@v4
+        with:
+          name: desktop-smoke-${{ matrix.name }}
+          path: ${{ runner.temp }}/callguide-smoke
+          if-no-files-found: warn
+      - name: Upload desktop package
+        uses: actions/upload-artifact@v4
+        with:
+          name: callguide-desktop-${{ matrix.name }}
+          path: |
+            desktop/dist/CallGuide-Desktop-*.zip
+            desktop/dist/CallGuide-Desktop-*.tar.gz
+            desktop/dist/CallGuide-Desktop-*.sha256
+          if-no-files-found: error
+
+  publish:
+    name: Publish desktop downloads
+    needs: package
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: callguide-desktop-*
+          path: desktop-downloads
+          merge-multiple: true
+      - name: Prepare checksums and release notes
+        shell: bash
+        run: |
+          python - <<'PY'
+          import hashlib,pathlib
+          root=pathlib.Path('desktop-downloads')
+          files=sorted(p for p in root.iterdir() if p.name.endswith(('.zip','.tar.gz')))
+          assert len(files)==4, [p.name for p in files]
+          (root/'SHA256SUMS.txt').write_text(''.join(hashlib.file_digest(p.open('rb'),'sha256').hexdigest()+'  '+p.name+'\n' for p in files),encoding='ascii')
+          PY
+          cp desktop/RELEASE_NOTES.md desktop-release-notes.md
+      - name: Publish desktop release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if ! gh release view desktop-v2.2.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create desktop-v2.2.0 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "CallGuide Desktop 2.2.0 — Windows, Linux & macOS" --notes-file desktop-release-notes.md --latest=false
+          fi
+          gh release upload desktop-v2.2.0 desktop-downloads/CallGuide-Desktop-* desktop-downloads/SHA256SUMS.txt --repo "$GITHUB_REPOSITORY" --clobber

@@ -1,0 +1,10 @@
+{
+  "name": "callguide-desktop",
+  "productName": "CallGuide",
+  "version": "2.2.0",
+  "description": "Caligrafia cursiva offline com palavras animadas, mouse e mesa digitalizadora.",
+  "main": "main.js",
+  "author": "Sidiney Rodrigues",
+  "license": "MIT",
+  "scripts": { "test": "node --test geometry.test.js ink.test.js" }
+}
