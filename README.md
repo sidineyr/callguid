@@ -2,6 +2,14 @@
 
 Aprenda o movimento das letras cursivas e pratique no papel digital. Aplicativo Android gratuito, offline e sem anúncios, para crianças e adultos.
 
+## Fonte Sidiney Caligrafia Refinada
+
+### [⬇ Baixar SidineyCaligrafia-Refinada.ttf](https://github.com/sidineyr/callguid/raw/80bf6f2d79ac7f85c2d7e68b4855ecf85211bd16/fonts/sidiney-caligrafia/SidineyCaligrafia-Refinada.ttf)
+
+![Prévia da fonte Sidiney Caligrafia Refinada](https://raw.githubusercontent.com/sidineyr/callguid/80bf6f2d79ac7f85c2d7e68b4855ecf85211bd16/fonts/sidiney-caligrafia/previas/Previa-Caligrafia-Refinada.png)
+
+Letra inspirada na escrita com caneta esferográfica **BIC**. [Leia a publicação do autor no Substack](https://substack.com/home/post/p-223397084).
+
 ## Baixar e instalar
 
 ### [⬇ Baixar CallGuide para Android](https://github.com/sidineyr/callguid/raw/refs/heads/master/CallGuide.apk)
@@ -37,8 +45,6 @@ Se você instalou um APK de teste anterior e o Android recusar a atualização p
 ## A letra e sua inspiração
 
 O CallGuide é inspirado na letra da fonte **Sidiney Caligrafia Refinada** e no seu uso com caneta esferográfica **BIC**. A fonte foi publicada pelo autor no [Substack](https://substack.com/home/post/p-223397084). A variação de espessura exibida pelo aplicativo é uma simulação visual para acompanhar o gesto da escrita; não mede a pressão física da caneta ou do dedo.
-
-### [⬇ Baixar a fonte Sidiney Caligrafia Refinada (.ttf)](https://github.com/sidineyr/callguid/raw/80bf6f2d79ac7f85c2d7e68b4855ecf85211bd16/fonts/sidiney-caligrafia/SidineyCaligrafia-Refinada.ttf)
 
 O arquivo está preservado no histórico do próprio repositório. Depois de baixar, você pode instalar a fonte no computador pelos recursos do seu sistema operacional.
 
