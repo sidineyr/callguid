@@ -1,4 +1,0 @@
-fonttools>=4.58,<5
-numpy>=2.0,<3
-scipy>=1.14,<2
-Pillow>=10.1,<13
