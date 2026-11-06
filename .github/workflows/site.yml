@@ -1,0 +1,61 @@
+name: Site CallGuide e capturas Android
+on:
+  push:
+    branches: [master]
+    paths: ['docs/**', 'scripts/capture-android.py', '.github/workflows/site.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: callguide-pages
+  cancel-in-progress: false
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          arch: x86_64
+          profile: pixel_2
+          disable-animations: true
+          script: |
+            adb install CallGuide.apk
+            python3 scripts/capture-android.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: callguide-capturas-android
+          path: docs/assets/screenshots/
+          if-no-files-found: warn
+  deploy:
+    if: always()
+    needs: screenshots
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        if: needs.screenshots.result == 'success'
+        with:
+          name: callguide-capturas-android
+          path: docs/assets/screenshots/
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - uses: actions/deploy-pages@v4
+        id: deployment

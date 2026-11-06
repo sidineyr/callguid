@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://sidineyr.github.io/callguid/sitemap.xml
+# GitHub Pages project sites cannot set the host-root robots.txt.

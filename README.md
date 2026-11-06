@@ -2,6 +2,12 @@
 
 Aprenda o movimento das letras cursivas e pratique no papel digital. Aplicativo Android gratuito, offline e sem anúncios, para crianças e adultos.
 
+## Site do projeto
+
+[Conheça o CallGuide](https://sidineyr.github.io/callguid/) · [Download oficial do APK 2.1](https://github.com/sidineyr/callguid/releases/download/v2.1.0/CallGuide-2.1.apk)
+
+O site inclui apresentação responsiva, instruções, privacidade, mapa do site, sitemap XML, metadados sociais e dados estruturados. A publicação ocorre pelo workflow `Site CallGuide e capturas Android`.
+
 ## Fonte Sidiney Caligrafia Refinada
 
 ### [⬇ Baixar SidineyCaligrafia-Refinada.ttf](https://github.com/sidineyr/callguid/raw/80bf6f2d79ac7f85c2d7e68b4855ecf85211bd16/fonts/sidiney-caligrafia/SidineyCaligrafia-Refinada.ttf)
