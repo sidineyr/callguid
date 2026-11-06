@@ -29,4 +29,4 @@ Se a variante enviada for patrocinada, acrescentar: “Esta versão contém publ
 
 ## Materiais ainda exigidos para envio
 
-Capturas reais do APK em dispositivo/emulador, ícone final 512×512, imagem de destaque 1024×500, classificação, público-alvo, declaração de anúncios e Segurança dos dados do AAB escolhido. A prévia HTML e os GIFs não são capturas do Android e não devem ser apresentados como tal. Confirmar limites e exigências na Play Console na data do envio.
+O ícone 512×512 e a imagem de destaque 1024×500 estão em `store/`. Ainda faltam capturas reais do APK em dispositivo/emulador, classificação, público-alvo, declaração de anúncios e Segurança dos dados do AAB escolhido. A prévia HTML e os GIFs não são capturas do Android e não devem ser apresentados como tal. Confirmar limites e exigências na Play Console na data do envio.
