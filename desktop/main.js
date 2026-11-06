@@ -28,7 +28,9 @@ app.whenReady().then(async () => {
     callback({ cancel: !['file:', 'data:', 'devtools:'].some(prefix => details.url.startsWith(prefix)) });
   });
   window = new BrowserWindow({ width:1280, height:900, minWidth:820, minHeight:640,
-    show:!smoke, backgroundColor:'#f7f5ed', title:'CallGuide — Ateliê de letras',
+    // Native CI has an isolated display: show the window so its compositor advances frames.
+    show:!smoke || process.env.GITHUB_ACTIONS==='true', skipTaskbar:smoke,
+    backgroundColor:'#f7f5ed', title:'CallGuide — Ateliê de letras',
     icon:path.join(__dirname,'assets/icon.png'),
     webPreferences:{nodeIntegration:false,contextIsolation:true,sandbox:true,webSecurity:true,backgroundThrottling:!smoke} });
   Menu.setApplicationMenu(Menu.buildFromTemplate([
