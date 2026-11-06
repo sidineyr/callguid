@@ -1,7 +1,7 @@
 'use strict';
 const $=id=>document.getElementById(id), G=window.CallGuideGeometry;
 const ns='http://www.w3.org/2000/svg';
-let drawing, segments=[], total=0, nib, elapsed=0, previous=0, raf=0, playing=false;
+let drawing, segments=[], total=0, nib, elapsed=0, previous=null, raf=0, playing=false;
 let upper=false, favorites=[], storageAvailable=true;
 try { favorites=JSON.parse(localStorage.getItem('callguide.words')||'[]').filter(x=>typeof x==='string'&&x.length<=64).slice(0,12); }
 catch { favorites=[]; storageAvailable=false; }
@@ -38,7 +38,8 @@ function renderProgress() {
 }
 function tick(now) {
   if(!playing) return;
-  elapsed+=(now-previous)*Number($('speed').value); previous=now;
+  if(previous!==null) elapsed+=Math.max(0,now-previous)*Number($('speed').value);
+  previous=now;
   if(renderProgress()>=1) {
     stop(); $('play').textContent='▶ Escrever novamente';
     $('animationStatus').textContent='Escrita concluída. Observe novamente ou experimente no papel digital.';
@@ -47,7 +48,7 @@ function tick(now) {
 function play(reset=false) {
   if(reset || renderProgress()>=1) elapsed=0;
   if(playing && !reset) { stop(); $('animationStatus').textContent='Animação pausada.'; return; }
-  cancelAnimationFrame(raf); playing=true; previous=performance.now();
+  cancelAnimationFrame(raf); playing=true; previous=null;
   $('play').textContent='Ⅱ Pausar'; $('animationStatus').textContent='Escrevendo… acompanhe a caneta.';
   raf=requestAnimationFrame(tick);
 }
@@ -148,9 +149,18 @@ window.callGuideSelfTest=async()=>{
   const checks=[]; const original=favorites.slice();
   const assert=(condition,name)=>{if(!condition) throw new Error(name);checks.push(name);};
   const frame=()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const waitUntil=async(predicate,label)=>{
+    const deadline=performance.now()+3500;
+    while(!predicate()) {
+      if(performance.now()>deadline) throw new Error('Timed out waiting for '+label);
+      await frame();
+    }
+  };
   try {
     $('word').value='João';$('prepare').click();assert(drawing.text==='João','Portuguese word composition');
-    $('play').click();await frame();assert(playing,'Animation started');$('play').click();assert(!playing&&elapsed>0,'Pause preserves progress');
+    $('play').click();assert(playing,'Animation started');
+    await waitUntil(()=>playing&&elapsed>0,'animation progress');
+    $('play').click();assert(!playing&&elapsed>0,'Pause preserves progress');
     $('practiceTab').click();await frame();pad.resize();assert(!$('practicePanel').hidden,'Practice navigation');
     const canvas=$('ink'),rect=canvas.getBoundingClientRect();
     function stroke(type,id=1) {
