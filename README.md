@@ -82,3 +82,15 @@ Versão **2.1.0**, pacote `com.sidineyr.callguide`. O APK é uma compilação de
 Compilação, assinatura, manifesto, composição de palavras e testes automatizados de fluxo verificados. O teste manual desta versão em aparelho Android ainda está pendente; relate problemas pelo contato acima.
 
 O repositório reúne o APK Android, o site do projeto, o diretório desktop, instruções, verificações de integridade e licença. O [código da versão 2.1](https://github.com/sidineyr/callguid/tree/source/2.1.0) está em uma branch própria. O histórico anterior continua preservado, sem ocupar a lista principal de arquivos. Distribuição sob [licença MIT](LICENSE).
+
+## Financiamento do site e materiais opcionais
+
+A página pública de apresentação contém uma seção de materiais opcionais dirigida a educadores e responsáveis, com [coleção de estudo e organização no Mercado Livre](https://meli.la/1vNKnY8). Os links são identificados como publicidade de afiliado; Sidiney Rodrigues pode receber comissão pelas compras. A compra não é necessária para usar o CallGuide, e materiais já disponíveis podem ser aproveitados. O [guia central de materiais](https://sidineyr.github.io/materiais/) reúne orientações de escolha.
+
+Essa divulgação está apenas no site público. O APK Android e o aplicativo desktop continuam offline, sem anúncios e sem SDK de publicidade; nenhum código de anúncios foi adicionado aos aplicativos. Links externos do site levam a serviços com suas próprias condições e políticas.
+
+O convite para [apoiar o Hospital Pequeno Príncipe](https://pequenoprincipe.org.br/doadores/apoie-o-pequeno-principe/) é independente, sem vínculo institucional nem intermediação financeira. Doações são feitas diretamente ao canal oficial, separadas das compras e comissões.
+
+### Publicação e capturas
+
+Alterações em `docs/` publicam o site sem iniciar o emulador Android. O job de capturas roda somente quando o workflow é iniciado manualmente (`workflow_dispatch`); o deploy mantém `if: always()` e preserva os arquivos já versionados em `docs/`, incorporando o artefato de capturas quando esse job termina com sucesso.
